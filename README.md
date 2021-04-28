@@ -31,7 +31,7 @@ FINTUALFINANCE(asset_id, [attribute], [start_date], [end_date|num_days], [interv
 - `start_date` - **[** OPTIONAL **]** - The start date when fetching historical data.
     - If `start_date` is specified but `end_date|num_days` is not, only the single day's data is returned.
 
-- `end_date|num_days` - **[** OPTIONAL **]** - The end date when fetching historical data, or the number of days from `start_date` for which to return data.
+- `end_date||num_days` - **[** OPTIONAL **]** - The end date when fetching historical data, or the number of days from `start_date` for which to return data.
 
 - `interval` - **[** OPTIONAL **]** - The frequency of returned data; either "DAILY" or "WEEKLY".
 
@@ -79,7 +79,6 @@ The attributes are the following for chilean fund data.
 - `"return156"` - 156-week-to-date (3-year) return. Return does not include fund dividends.
 - `"return260"` - 260-week-to-date (5-year) return. Return does not include fund dividends.
 - `"conceptual_asset"` - Return information of the conceptual asset asociated to the conceptual asset id.
-- `"real_assets_list"` - List of real assets from conceptual asset ID.
 
 **Special cases**
 
@@ -87,6 +86,11 @@ The attributes are the following for chilean fund data.
 
     ```jsx
     FINTUALFINANCE("conceptual_assets")
+    ```
+- `"real_assets_list"` - List of real assets from conceptual asset ID.
+
+    ```jsx
+    FINTUALFINANCE([conceptual_asset_id], "real_assets_list")
     ```
 
 - `"search"` - Search returns a list of conceptual assets matched by name or run.  For this consult `asset_id` is replaced by `run||name`. Therefore, the syntax is:
@@ -155,11 +159,62 @@ Additionally, **only for mutual funds** as real assets, the following attributes
 - `"redeemed_shares"`
 - `"redeemed_shares_type"`
 
-### Private Consult
+### Private Query
 
-To access to your account you should press the button "Custom Menu" and then "Credentials Form". There you have to put yur email and then your password. If the credentials are right, it will appear "Sign in Succesfully".
+Follow this steps to consult for your Fintual accounts goals:
 
-To access to your goals the consult syntax is:
-```jsx
-FINTUALFINANCE("goals_information")
+1. Press the "FINTUALFINANCE" menu on the top and click "Add User Credentials". Accept the authorizations request. A pop up window will open where you have to put the email and password of your Fintual account. If the credentials are correct, it will appear "Signed in succesfully".
+2. Write the consult.The syntax is:
+
+    ```jsx
+    FINTUALFINANCE("goals_information")
+    ```
+### Admin Query
+
+Follow this steps to consult for your Fintual accounts goals:
+
+1. Press the "FINTUALFINANCE" menu on the top and click "Add User Credentials". Accept the authorizations request. A pop up window will open where you have to put the email and password of your Fintual account. If the credentials are correct, it will appear "Signed in succesfully".
+2. Write the consult.The syntax is:
+
+    ```jsx
+    FINTUALFINANCE([consult_name]], [funds], [date])
+    ```
+The querys are the following:
+
+- `"investment_portfolio"`
+- `"assets"`
+- `"equity"`
+
+**Sample Usage**
+
+```javascript
+FINTUALFINANCE("investment_portfolio", "2", "2021-01-17")
+
+FINTUALFINANCE("investment_portfolio", "2,3", "2021-01-17")
+
+FINTUALFINANCE("assets", "2,3", "2021-01-17")
+
+FINTUALFINANCE("equity", "2,3", "2021-01-17")
 ```
+
+## Examples
+
+### Chilean Fund Attributes
+**Attributes that can't be consulted with optional parameters**
+
+![Alt text](images/basic_consults.png)
+
+![Alt text](images/conceptual_asset_list.png)
+
+![Alt text](images/conceptual_assets.png)
+
+![Alt text](images/search.png)
+
+**Attributes that can be consulted with optional parameters**
+
+![Alt text](images/optional_parameters.png)
+
+### Mutual & Investment Funds
+![Alt text](images/mutual_and_investment.png)
+### Mutual Funds
+![Alt text](images/mutual.png)
